@@ -9,6 +9,7 @@ local randommaster = gui.Checkbox(MsSwitch, "rnmaster", "RandomMasterSwitch", 0)
 local manualstart = gui.Keybox(MsSwitch, "ManualChangeName", "ManualChangeNameKey", 119)
 local staticname = gui.Editbox(String, "staticName", "staticName")
 local ontimechange = gui.Checkbox(MsSwitch, "ontimechange", "OnTimeChange", 0);
+local ontimetick =  gui.Slider(MsSwitch, "ontimetick", "OnTimeTick", 256, 64, 1000, 1)
 local usepy = gui.Checkbox(MsSwitch, "usepy", "UsePyScript", 0);
 local thisname = gui.Editbox(String, "plocalname", "plocalName")
 
@@ -177,7 +178,7 @@ callbacks.Register("CreateMove", function()
                 gui.SetValue("misc.stealname", 0)
             end
             if ontimechange:GetValue() then
-                if localplayername ~= "?empty" and localplayername ~= "󠀡󠀡" and globals.TickCount() % 600 == 0 then
+                if localplayername ~= "?empty" and localplayername ~= "󠀡󠀡" and globals.TickCount() % ontimetick:GetValue() == 0 then
                     randomchangename()
                     needchangename = false
                 end
