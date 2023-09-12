@@ -132,7 +132,7 @@ local font = draw.CreateFont("Microsoft Tai Le", 30, 1000);
 local needchangename = false
 local localplayername = nil
 
-local function randomchangename()
+local function randomchangename(pLocal)
     if staticname:GetValue() ~= nil and staticname:GetValue() ~= "" then
         client.SetConVar("name", staticname:GetValue() .. "­­")
         print("Name Changed to " .. staticname:GetValue())
@@ -142,6 +142,7 @@ local function randomchangename()
             client.SetConVar("name", randomname .. "­­")
             if not ontimechange:GetValue() then
                 print("Name Changed to " .. randomname)
+                localplayername = pLocal:GetName()
             end
         end
     end
@@ -154,7 +155,7 @@ callbacks.Register("CreateMove", function()
 
         if randommaster:GetValue() then
             if needchangename and globals.TickCount() % 30 == 0 then
-                randomchangename()
+                randomchangename(pLocal)
                 needchangename = false
             end
 
@@ -174,12 +175,12 @@ callbacks.Register("CreateMove", function()
             end
 
             if localplayername == "?empty" then
-                randomchangename()
+                randomchangename(pLocal)
                 gui.SetValue("misc.stealname", 0)
             end
             if ontimechange:GetValue() then
                 if localplayername ~= "?empty" and localplayername ~= "󠀡󠀡" and globals.TickCount() % ontimetick:GetValue() == 0 then
-                    randomchangename()
+                    randomchangename(pLocal)
                     needchangename = false
                 end
             end
@@ -210,6 +211,6 @@ client.AllowListener("begin_new_match");
 callbacks.Register("FireGameEvent", function(e)
     local eventName = e:GetName()
     if (eventName == "client_disconnect") or (eventName == "begin_new_match") then
-        localplayername = nil
+        localplayername = ""
     end
 end)
