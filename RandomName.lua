@@ -11,7 +11,9 @@ local staticname = gui.Editbox(String, "staticName", "staticName")
 local ontimechange = gui.Checkbox(MsSwitch, "ontimechange", "OnTimeChange", 0);
 local ontimetick =  gui.Slider(MsSwitch, "ontimetick", "OnTimeTick", 256, 64, 1000, 1)
 local usepy = gui.Checkbox(MsSwitch, "usepy", "UsePyScript", 0);
-local thisname = gui.Editbox(String, "plocalname", "plocalName")
+local ondeathchange = gui.Checkbox(MsSwitch, "deathchange", "OnDeathChange", 0);
+local thisname = gui.Editbox(String, "plocalname", "plocalName");
+
 
 
 local namelist = { "James", "翻斗花园第一突破手", "Kamisama", "我永远喜欢樱岛麻衣", "CSGO大茄子",
@@ -208,9 +210,18 @@ SetThisName:SetWidth(268)
 
 client.AllowListener("client_disconnect");
 client.AllowListener("begin_new_match");
+client.AllowListener('player_death');
 callbacks.Register("FireGameEvent", function(e)
     local eventName = e:GetName()
     if (eventName == "client_disconnect") or (eventName == "begin_new_match") then
         localplayername = ""
+    elseif (eventName == 'player_death') and ondeathchange:GetValue() then
+        local lp = client.GetLocalPlayerIndex()
+        local victim = client.GetPlayerIndexByUserID(e:GetInt('userid'))
+        -- local attacker = client.GetPlayerIndexByUserID(Event:GetInt('attacker'))
+        if lp == victim then
+        -- and attacker ~= lp then
+            needchangename = true
+        end
     end
 end)
