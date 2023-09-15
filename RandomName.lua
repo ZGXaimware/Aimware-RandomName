@@ -9,18 +9,19 @@ local randommaster = gui.Checkbox(MsSwitch, "rnmaster", "RandomMasterSwitch", 0)
 local manualstart = gui.Keybox(MsSwitch, "ManualChangeName", "ManualChangeNameKey", 119)
 local staticname = gui.Editbox(String, "staticName", "staticName")
 local ontimechange = gui.Checkbox(MsSwitch, "ontimechange", "OnTimeChange", 0);
-local ontimetick =  gui.Slider(MsSwitch, "ontimetick", "OnTimeTick", 256, 64, 1000, 1)
+local ontimetick = gui.Slider(MsSwitch, "ontimetick", "OnTimeTick", 256, 64, 1000, 1)
 local usepy = gui.Checkbox(MsSwitch, "usepy", "UsePyScript", 0);
 local ondeathchange = gui.Checkbox(MsSwitch, "deathchange", "OnDeathChange", 0);
 local thisname = gui.Editbox(String, "plocalname", "plocalName");
-
+local recordmode = gui.Checkbox(MsSwitch, "recordmode", "RecordMode", 0);
 
 
 local namelist = { "James", "翻斗花园第一突破手", "Kamisama", "我永远喜欢樱岛麻衣", "CSGO大茄子",
     "WDNMD", "Selector", "-=Smart=-", "理塘最強伝説!純真丁一郎", "当爱已成往事", "Astender", "Bubbpy",
     ":D flash", "Revenger", "蜜雪冰城甜蜜蜜", "百香果果汁", "Slayer", "YaYa大D", "Cz7Teacher", "可惜悦刻没有电",
     "Aqua Minato", "和泉紗霧", "Apex顶猎", "DeagleKing", "Lê Minh", "龍が如く", "初音未来", "Rolicon",
-    "对镜子倾诉心事", "Miku", "Sksleetion", "QZSekec", "雷军!金凡!", "小爱同学", "Rosetta", "樱岛麻衣", "百事可乐", "可口可乐", "Kawaii", "StormGamer",
+    "对镜子倾诉心事", "Miku", "Sksleetion", "QZSekec", "雷军!金凡!", "小爱同学", "Rosetta", "樱岛麻衣",
+    "百事可乐", "可口可乐", "Kawaii", "StormGamer",
     "FireDragon",
     "IceQueen",
     "ShadowHunter",
@@ -191,7 +192,8 @@ callbacks.Register("CreateMove", function()
 end)
 
 callbacks.Register("Draw", function()
-    if gui.GetValue("esp.master") and randommaster:GetValue() then
+    if recordmode:GetValue() and not gui.GetValue("esp.master") then return end
+    if randommaster:GetValue() then
         draw.SetFont(font);
         draw.Color(255, 255, 255, 255);
         if not (localplayername == nil) then
@@ -220,7 +222,7 @@ callbacks.Register("FireGameEvent", function(e)
         local victim = client.GetPlayerIndexByUserID(e:GetInt('userid'))
         -- local attacker = client.GetPlayerIndexByUserID(Event:GetInt('attacker'))
         if lp == victim then
-        -- and attacker ~= lp then
+            -- and attacker ~= lp then
             needchangename = true
         end
     end
