@@ -39,6 +39,7 @@ class cWindow:
                     # Note that if we tried to hide the window with SW_HIDE,
                     # it would disappear from the Task Bar as well.
                     win32gui.ShowWindow(hwnd, win32con.SW_FORCEMINIMIZE)
+
 def setpopwindow():
     try:
         regex = ".*Counter-Strike*"
