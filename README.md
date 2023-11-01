@@ -1,4 +1,6 @@
 # Aimware-RandomName
+For Legacy CSGO only.Discontinued
+
 A lua that changes your name to random premade name For Aimware v5.1 CSGO<br />
 <br />
 [Youtube Showcase](https://youtu.be/DWSTfKswuZU)
